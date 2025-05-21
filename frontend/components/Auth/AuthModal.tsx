@@ -3,6 +3,7 @@ import Modal from "../Modal";
 import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import RecoveryForm from "./RecoveryForm";
 
 const AuthModal = ({
   isOpen,
@@ -23,7 +24,12 @@ const AuthModal = ({
       case "register":
         return <RegisterForm onSwitch={() => setCurrentForm("login")} />;
       case "recovery":
-        return <div>recovery</div>;
+        return (
+          <RecoveryForm
+            onBackToLogin={() => setCurrentForm("login")}
+            onBackToSignUp={() => setCurrentForm("register")}
+          />
+        );
     }
   }
 
