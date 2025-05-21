@@ -4,6 +4,7 @@ import { SwitchFormProps } from "@/types";
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 import FieldForm from "../FieldForm";
+import { API_URL } from "@/utils/route";
 
 const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
   const [email, setEmail] = useState<string>("");
@@ -21,7 +22,7 @@ const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
     setLoading(true);
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(API_URL.RECOVERY, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -48,7 +49,7 @@ const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
     setLoading(true);
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(API_URL.CONFIRM_CODE, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code }),
@@ -74,7 +75,7 @@ const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
     setLoading(true);
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(API_URL.CHANGE_PASSWORD, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, code, password, passwordTwo }),

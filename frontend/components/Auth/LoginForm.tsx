@@ -4,6 +4,7 @@ import { useState } from "react";
 import AuthForm from "./AuthForm";
 import { SwitchFormProps } from "@/types";
 import FieldForm from "../FieldForm";
+import { API_URL } from "@/utils/route";
 
 const LoginForm = ({ onSwitch, onRecovery }: SwitchFormProps) => {
   const [email, setEmail] = useState<string>("");
@@ -18,7 +19,7 @@ const LoginForm = ({ onSwitch, onRecovery }: SwitchFormProps) => {
     setLoading(true);
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(API_URL.LOGIN, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

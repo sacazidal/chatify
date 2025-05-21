@@ -4,6 +4,7 @@ import { SwitchFormProps } from "@/types";
 import { useState } from "react";
 import AuthForm from "./AuthForm";
 import FieldForm from "../FieldForm";
+import { API_URL } from "@/utils/route";
 
 const RegisterForm = ({ onSwitch }: SwitchFormProps) => {
   const [email, setEmail] = useState<string>("");
@@ -21,7 +22,7 @@ const RegisterForm = ({ onSwitch }: SwitchFormProps) => {
     setLoading(true);
 
     try {
-      const response = await fetch("", {
+      const response = await fetch(API_URL.REGISTER, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
