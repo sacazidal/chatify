@@ -36,7 +36,7 @@ export type FieldFormProps = {
   label: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  type: string;
+  type: React.HTMLInputTypeAttribute;
   id: string;
   placeholder?: string;
   recovery?: React.ReactNode;
