@@ -5,20 +5,25 @@ import { useState } from "react";
 import AuthForm from "./AuthForm";
 import FieldForm from "../FieldForm";
 import { API_URL } from "@/utils/route";
+import BtnShowPassword from "../BtnShowPassword";
 
 const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [errorValue, setErrorValue] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordTwo, setPasswordTwo] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(3);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setError("");
+    setErrorValue("");
     setLoading(true);
 
     try {
@@ -152,6 +157,7 @@ const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
           onChange={(e) => setEmail(e.target.value)}
           type="email"
           id="email"
+          errorValue={errorValue}
           placeholder="eye@example.com"
           disabled={step === 2}
         />
@@ -160,6 +166,7 @@ const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
         <FieldForm
           label="Шестизначный код"
           value={code}
+          errorValue={errorValue}
           onChange={(e) => setCode(e.target.value)}
           type="number"
           id="code"
@@ -169,20 +176,34 @@ const RecoveryForm = ({ onBackToLogin, onBackToSignUp }: SwitchFormProps) => {
       )}
       {step === 3 && (
         <>
-          <FieldForm
-            label="Новый пароль"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            type="password"
-            id="newPassword"
-          />
-          <FieldForm
-            label="Повторите пароль"
-            value={passwordTwo}
-            onChange={(e) => setPasswordTwo(e.target.value)}
-            type="password"
-            id="newPasswordTwo"
-          />
+          <div className="relative">
+            <FieldForm
+              label="Новый пароль"
+              value={password}
+              errorValue={errorValue}
+              onChange={(e) => setPassword(e.target.value)}
+              type={showPassword ? "text" : "password"}
+              id="newPassword"
+            />
+            <BtnShowPassword
+              onClick={() => setShowPassword(!showPassword)}
+              show={showPassword}
+            />
+          </div>
+          <div className="relative">
+            <FieldForm
+              label="Повторите пароль"
+              value={passwordTwo}
+              onChange={(e) => setPasswordTwo(e.target.value)}
+              type={showNewPassword ? "text" : "password"}
+              id="newPasswordTwo"
+              errorValue={errorValue}
+            />
+            <BtnShowPassword
+              onClick={() => setShowNewPassword(!showNewPassword)}
+              show={showNewPassword}
+            />
+          </div>
         </>
       )}
     </AuthForm>
