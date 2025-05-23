@@ -12,6 +12,7 @@ const FieldForm = ({
   placeholder,
   disabled,
   maxLength,
+  errorValue,
 }: FieldFormProps) => {
   return (
     <div className="grid gap-1">
@@ -33,6 +34,7 @@ const FieldForm = ({
         onChange={onChange}
         autoComplete="on"
       />
+      {errorValue && <p className="text-red-500 text-xs">{errorValue}</p>}
     </div>
   );
 };
