@@ -5,19 +5,21 @@ import AuthForm from "./AuthForm";
 import { SwitchFormProps } from "@/types";
 import FieldForm from "../FieldForm";
 import { API_URL } from "@/utils/route";
-import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import BtnShowPassword from "../BtnShowPassword";
 
 const LoginForm = ({ onSwitch, onRecovery }: SwitchFormProps) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [errorValue, setErrorValue] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setError("");
+    setErrorValue("");
     setLoading(true);
 
     try {
@@ -66,14 +68,16 @@ const LoginForm = ({ onSwitch, onRecovery }: SwitchFormProps) => {
         type="email"
         id="email"
         placeholder="eye@example.com"
+        errorValue={error}
       />
       <div className="relative">
         <FieldForm
           label="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          type={showPassword ? "password" : "text"}
+          type={showPassword ? "text" : "password"}
           id="password"
+          errorValue={errorValue}
           recovery={
             <button
               onClick={onRecovery}
@@ -83,14 +87,10 @@ const LoginForm = ({ onSwitch, onRecovery }: SwitchFormProps) => {
             </button>
           }
         />
-        <button
-          type="button"
-          className="absolute right-3 top-[34px]"
-          onClick={() => setShowPassword((prev) => !prev)}
-          aria-label={showPassword ? "Скрыть пароль" : "Показать пароль"}
-        >
-          {showPassword ? <EyeClosedIcon size={18} /> : <EyeIcon size={18} />}
-        </button>
+        <BtnShowPassword
+          onClick={() => setShowPassword(!showPassword)}
+          show={showPassword}
+        />
       </div>
     </AuthForm>
   );
