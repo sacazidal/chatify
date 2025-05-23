@@ -68,7 +68,7 @@ const LoginForm = ({ onSwitch, onRecovery }: SwitchFormProps) => {
         type="email"
         id="email"
         placeholder="eye@example.com"
-        errorValue={error}
+        errorValue={errorValue}
       />
       <div className="relative">
         <FieldForm
