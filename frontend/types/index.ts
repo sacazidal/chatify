@@ -42,4 +42,5 @@ export type FieldFormProps = {
   recovery?: React.ReactNode;
   disabled?: boolean;
   maxLength?: number;
+  errorValue?: string;
 };
