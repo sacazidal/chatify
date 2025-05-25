@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  email            String             @unique
+  firstName        String             @map("first_name")
+  lastName         String             @map("last_name")
+  passwordHash     String             @map("password_hash")
+  isActive         Boolean            @default(true) @map("is_active")
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @updatedAt @map("updated_at")
+  CodeConfirmation CodeConfirmation[]
+  LoginLog         LoginLog[]
+
+  @@index([email])
+  @@map("user")
+}
+
+model CodeConfirmation {
+  id        Int      @id @default(autoincrement())
+  code      String
+  expiresAt DateTime @map("expires_at")
+  isActive  Boolean  @default(true) @map("is_active")
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@map("code_confirmation")
+}
+
+model LoginLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  ip        String
+  userAgent String
+  createdAt DateTime @default(now())
+
+  @@map("login_log")
+}
